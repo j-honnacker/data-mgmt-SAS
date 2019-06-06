@@ -1,0 +1,6 @@
+var_name,var_length,var_SAS_informat,var_SAS_format
+Timestamp,8,date11.,yymmddn8.
+Stock_ID,$8,$8.
+sentiment,8,5.2,5.2
+relevance,8,5.2,5.2
+more_vars,$20,$20.

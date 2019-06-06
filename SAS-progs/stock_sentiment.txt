@@ -1,0 +1,5 @@
+Timestamp,Stock_ID,sentiment,relevance,more_vars
+10-AUG-2010,stck_x, 0.65,0.40,"ach"
+10-AUG-2010,stck_Y,-0.80,0.30,"wie gut"
+10-AUG-2010,stck_x, 0.50,0.45,"dass niemand"
+11-AUG-2010,stck_x, 0.40,1.00,"weiss"
