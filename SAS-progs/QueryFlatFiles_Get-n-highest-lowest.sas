@@ -46,6 +46,7 @@ usage
 	infile     =
 ,	infile_def =
 ,	order_by   =
+,	n_highest  =
 );
 
 
@@ -106,6 +107,7 @@ quit;
 data _null_;
 
 	attrib
+		/* input file variables */
 	  %do i=1 %to &number_of_vars.;
 		&&var&i._name.
 			length = &&var&i._length.  /*set variable length*/
@@ -113,14 +115,21 @@ data _null_;
 			format = &&var&i._format.  /*set variable format (if available)*/
 		  %end;
 	  %end;
+		/* temporary variables */
+		__rc_ length = 8  /*will receive return codes from hash operations*/
 	;
 
+	/* instantiate hash table "hsh" */
 	declare hash
 		hsh( multidata:'y'
 		   , ordered:'d' );
 		hsh.DefineKey("&order_by.");
 		hsh.DefineData(&var_names.);
 		hsh.DefineDone();
+
+	/* instantiate hash iterator "htr" for hash table "hsh" */
+	declare hiter
+		htr('hsh');
 
 	infile
 		"&infile."
@@ -131,6 +140,7 @@ data _null_;
 	;
 	
 	do until(eof);
+
 		input
 		  %do i=1 %to &number_of_vars.;
 			&&var&i._name.
@@ -138,7 +148,15 @@ data _null_;
 		  %end;
 		;
 	
+		/* add (input file) record to hash table */
 		hsh.add();
+
+		/* remove last entry in hash if maximum number of entries is exceeded */
+		if hsh.num_items > &n_highest. then do;
+			htr.last();     /*set pointer to last entry*/
+			__rc_=htr.next(); /*clear the pointer so the entry can be removed*/
+			hsh.remove();   /*remove entry*/
+		end;
 
 	end;
 
@@ -159,6 +177,7 @@ run;
 	infile      = &path_to_data.stock_sentiment.txt
 ,	infile_def  = &path_to_data.stock_sentiment_def.txt
 ,	order_by    = sentiment
+,	n_highest   = 2
 );
 
 
