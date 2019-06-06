@@ -45,6 +45,7 @@ usage
 (
 	infile     =
 ,	infile_def =
+,	order_by   =
 );
 
 
@@ -75,8 +76,34 @@ data _null_;
 	call symputx("number_of_vars", _N_);
 run;
 
+/* save column definitions in macro variables */
+data _null_;
+	set _column_def end=eof;
+	call symputx(cats("var",_N_,"_name")    , var_name);
+	call symputx(cats("var",_N_,"_length")  , var_length);
+	call symputx(cats("var",_N_,"_informat"), var_SAS_informat);
+	call symputx(cats("var",_N_,"_format")  , var_SAS_format);
+	if eof;
+	call symputx("number_of_vars", _N_);
+run;
 
-data test;
+/* save column names as comma separated values in macro variable */
+proc sql noprint;
+	select
+		var_name
+	into
+		:var_names
+	separated by
+		'", "'
+	from
+		_column_def
+	;
+quit;
+
+%let var_names = "&var_names."; /*add "outer" quotations marks*/
+
+
+data _null_;
 
 	attrib
 	  %do i=1 %to &number_of_vars.;
@@ -88,32 +115,50 @@ data test;
 	  %end;
 	;
 
+	declare hash
+		hsh( multidata:'y'
+		   , ordered:'d' );
+		hsh.DefineKey("&order_by.");
+		hsh.DefineData(&var_names.);
+		hsh.DefineDone();
+
 	infile
 		"&infile."
 		firstobs=2
 		dsd
 		truncover
+		end=eof
 	;
 	
-	input
-	  %do i=1 %to &number_of_vars.;
-		&&var&i._name.
-			:&&var&i._informat.
-	  %end;
-	;
+	do until(eof);
+		input
+		  %do i=1 %to &number_of_vars.;
+			&&var&i._name.
+				:&&var&i._informat.
+		  %end;
+		;
+	
+		hsh.add();
 
+	end;
 
+	hsh.output(dataset:'test');
+
+	stop;
 run;
 	
 %mend;
+
+
 
 /*%let path_to_data = C:\D\repos\data-mgmt-SAS\SAS-progs\;*/
 %let path_to_data =	/sas/homes/repos/data-mgmt-SAS/SAS-progs/;
 
 %get_n_highest_lowest
 (
-	infile       = &path_to_data.stock_sentiment.txt
-,	infile_def   = &path_to_data.stock_sentiment_def.txt
+	infile      = &path_to_data.stock_sentiment.txt
+,	infile_def  = &path_to_data.stock_sentiment_def.txt
+,	order_by    = sentiment
 );
 
 
