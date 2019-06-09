@@ -15,14 +15,14 @@ data stocks;
 datalines;
 03-NOV-2019 APL 100
 03-NOV-2019 BBB  20
-04-NOV-2019 APL  90
+04-NOV-2019 APL  95
 04-NOV-2019 BBB  22
-05-NOV-2019 APL 110
-05-NOV-2019 BBB 110
-06-NOV-2019 APL  80
-06-NOV-2019 BBB  80
-07-NOV-2019 APL  90
-07-NOV-2019 BBB  90
+05-NOV-2019 APL 105
+05-NOV-2019 BBB  24
+06-NOV-2019 APL 110
+06-NOV-2019 BBB  23
+07-NOV-2019 APL 108
+07-NOV-2019 BBB  21
 run;
 
 
@@ -61,7 +61,7 @@ data _null_;
 	     hash table */
 
 	/* Output hash table */
-	hsh_1.output(dataset:'sorted_by_stocks1');
+	hsh_1.output(dataset:'sorted_by_stocks1a');
 
 
 	/*-------------------------------------------------------------------------/
@@ -94,7 +94,71 @@ data _null_;
 	end;
 
 	/* Output hash table */
-	hsh_2.output(dataset:'sorted_by_stocks2');
+	hsh_2.output(dataset:'sorted_by_stocks1b');
 
+	stop;
+run;
+
+
+
+/******************************************************************************/
+/* T2: Use a hiter to iterate through the hash table                          */
+/******************************************************************************/
+
+data sorted_by_stocks2a sorted_by_stocks2b;
+
+	if 0 then set stocks;
+
+	/*---------------------------------*/
+	/* Declare and populate hash table */
+	/*---------------------------------*/
+	declare hash
+		hsh(dataset:"stocks(where=(&condition.))",
+		    ordered:'a');
+		hsh.defineKey('sym','date');
+		hsh.defineData(all:'y');
+		hsh.defineDone();
+
+	/*---------------*/
+	/* Declare Hiter */
+	/*---------------*/
+	declare hiter htr('hsh');
+
+
+	/*----------------------------------------*/
+	/* Iterate FORWARD through the hash table */
+	/*----------------------------------------*/
+
+	/* Start a loop by reading the FIRST entry of the hash table into the PDV...
+	   ...and keep the loop alive as long as the return code rc is 0. */
+	do rc = htr.first() by 0 while(rc = 0);
+
+		/* Write PDV to data set */
+		output sorted_by_stocks2a;
+
+		/* Try to read NEXT entry of hash table into PDV.
+		   The return code will deviate from 0 if there is no next entry. */
+		rc = htr.next();
+	end;
+
+
+	/*------------------------------------------*/
+	/* Iterate BACKWARDS through the hash table */
+	/*------------------------------------------*/
+
+	/* Start a loop by reading the LAST entry of the hash table into the PDV...
+	   ...and keep the loop alive as long as the return code rc is 0. */
+	do rc = htr.last() by 0 while(rc = 0);
+
+		/* Write PDV to data set */
+		output sorted_by_stocks2b;
+
+		/* Try to read PREVIOUS entry of hash table into PDV.
+		   The return code will deviate from 0 if there is no previous entry. */
+		rc = htr.prev();
+	end;
+
+
+	drop rc;
 	stop;
 run;
