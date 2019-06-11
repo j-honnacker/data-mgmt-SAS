@@ -50,3 +50,77 @@ run;
 
 %mend;
 %loop;
+
+
+
+/*----------------------------------------------------------------------------*/
+/* t2.1: Create macro variables from the values of a data set variable using  */
+/*       PROC SQL "into:" clause                                              */
+/*----------------------------------------------------------------------------*/
+
+proc sql noprint;
+
+    select
+        count(*)
+    into
+        :number_of_rows trimmed /*important: 'trimmed' removes leading blanks*/
+    from
+        xmpl_data
+    ;
+    /* NOTE: This is only to showcase the 'trimmed' option. To determine the
+             number of rows of a SAS data set, instead of actually counting
+             them, it's more efficient (1) to simply read the data set header
+             (NOBS= data set option or SCL functions) or (2) to look up the data
+             set infos in dictionary.tables. */
+            
+    select
+        id
+    ,   i   /*create macro variables from variable "i" also*/
+    into
+        :id_1-:id_&number_of_rows. /*the part after the hyphen is optional...*/
+    ,   :i_1-                      /*...which is why this line also works*/
+    from
+        xmpl_data
+    ;
+quit;
+
+
+%macro loop;
+
+    /* iterate over all created macro variables "i_<i>" and "id_<i>" */
+    %do i = 1 %to &number_of_rows.;
+
+        /* print names and values of macro variables "i_<i>" and "id_<i>" */
+        %put
+        	i = &&i_&i..
+        	id_&i. = &&id_&i..
+        ;
+
+    %end;
+
+%mend;
+%loop;
+
+
+
+/*----------------------------------------------------------------------------*/
+/* t2.2: Create a single macro variable containing all the values of a data   */
+/*       set variable using PROC SQL "into:" clause                           */
+/*----------------------------------------------------------------------------*/
+
+proc sql noprint;
+    select /*distinct  /* <- can be added to only consider unique id values*/
+        id
+    ,   i
+    into
+        :ids separated by ','
+    ,   :i   separated by ', '
+    from
+        xmpl_data
+    ;
+quit;
+
+/* print names and values of macro variable "id" and ids" */
+%put &=i.;
+%put &=ids.;
+
