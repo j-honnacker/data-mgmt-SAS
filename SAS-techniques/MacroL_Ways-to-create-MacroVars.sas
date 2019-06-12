@@ -52,6 +52,44 @@ run;
 %loop;
 
 
+/*----------------------------------------------------------------------------*/
+/* Additional note on CALL SYMPUTX(): The 3 ways (L, G, F) to specify the     */
+/* symbol table.                                                              */
+/*----------------------------------------------------------------------------*/
+
+%macro set_color_to_green( symbol_table );
+ /*  This macro
+  *   - assings macro variable "&color" the value "green" in the user-defined
+  *     symbol table "&symbol_table"
+  *   - prints the value of "&color" to the log
+  */
+    data _null_;
+        call symputx('color'           /*name of macro variable*/
+                    , green            /*value of macro variable*/
+                    , "&symbol_table." /*place to save macro variable*/
+                    );
+    run;
+
+    %put local (macro) environment:;
+    %put &=color;
+%mend;
+
+
+%let color = red;         /*set value of "&color" to "red" in GLOBAL table*/
+
+%set_color_to_green( L ); /*set value of "&color" to "green" in LOCAL table*/
+
+%put global environment:;
+%put &=color.;
+
+%set_color_to_green( G ); /*set value of "&color" to "green" in GLOBAL table*/
+%set_color_to_green( F ); /*set value of "&color" to "green" in MOST LOCAL table
+                            in which it exists (here: GLOBAL table).*/
+
+%put global environment:;
+%put &=color.;
+
+
 
 /*----------------------------------------------------------------------------*/
 /* t2.1: Create macro variables from the values of a data set variable using  */
