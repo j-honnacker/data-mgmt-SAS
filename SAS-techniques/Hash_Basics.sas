@@ -78,7 +78,10 @@ data _null_;
 		hsh_2.defineDone();
 	/* - Here, each variable for the hash table needs to be specified.
 	     all:'y' only works if a data set is given in the declaration of
-	     the hash. */
+	     the hash.
+	   - using "hsh_2(dataset:'stocks(obs=0)')" would allow for all:'y', but
+	     it would also cause a NOTE in the log stating that 0 observations
+		 were read from data set stocks */
 
 	/*-------------------------*/
 	/* (2) Populate hash table */
