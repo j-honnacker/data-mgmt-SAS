@@ -77,6 +77,44 @@ data
 	end;
 run;
 
+/* Names of variables to compare => save in macro variable &vars_in_both
+*/
+proc sql noprint;
+	select
+		NAME
+	into
+		:vars_in_both separated by ' '
+	from
+		_tmp_vars_in_both
+	;
+quit;
+
+/* Names of variables that only exist in 1 of both data sets => print to log
+*/
+%let log_msg = %sysfunc(compbl(
+	NOTE: Variables that will be excluded because they only exist in _:
+));
+%do i = 1 %to 2;
+	data _null_;
+		set _tmp_vars_only_in_&i.;
+		
+		if _N_ = 1 then do;
+			log_msg = tranwrd("&log_msg.", "_:", "&&in_&i..:");
+			put log_msg;
+		end;
+
+		log_msg = catx(" ", cats("(",_N_,")"), NAME);
+		put log_msg;
+	run;
+%end;
+
+/* If &in_1 and &in_2 have no common variables => print to log and exit
+*/
+%if (&vars_in_both.) = () %then %do;
+	%put WARNING: There are no variables to compare.;
+	%return;
+%end;
+
 %mend;
 
 
