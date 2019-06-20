@@ -198,6 +198,42 @@ data
 run;
 
 
+/*----------------------------------------------------------------------------*/
+/* Delete data sets that do not contain any records                           */
+/*----------------------------------------------------------------------------*/
+
+/* specify data sets to be checked for number of records
+*/
+%let check_ds =
+	&out_prefix._in_both
+	&out_prefix._only_in_1
+	&out_prefix._only_in_2
+	_tmp_vars_1
+	_tmp_vars_2
+	_tmp_vars_dffrnt_types
+	_tmp_vars_only_in_1
+	_tmp_vars_only_in_2
+;
+
+/* iterate over data sets and delete those that are empty
+*/
+%do i=1 %to %sysfunc(countw(&check_ds.));
+	%let ds = %scan( &check_ds., &i. );
+
+	/* get the number of records for the current data set */
+	%let dsid = %sysfunc(open(&ds.));
+	%let recs = %sysfunc(attrn(&dsid., nobs));
+	%let dsid = %sysfunc(close(&dsid.));
+
+	/* delete current data set if it does not have any records */
+	%if &recs. = 0 %then %do;
+		proc delete
+			data = &ds.;
+		run;
+	%end;
+
+%end;
+
 %mend;
 
 
