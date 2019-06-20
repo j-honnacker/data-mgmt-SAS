@@ -57,9 +57,9 @@ run;
 /* Compare variables by variable name
 */
 data
-	_tmp_vars_in_both   /*vars that exist in &in_1. and &in_2.*/
-	_tmp_vars_only_in_1 /*vars that exist in &in_1. only*/
-	_tmp_vars_only_in_2 /*vars that exist in &in_2. only*/
+	_tmp_vars_in_both   /*for vars that exist in &in_1. and &in_2.*/
+	_tmp_vars_only_in_1 /*for vars that exist in &in_1. only*/
+	_tmp_vars_only_in_2 /*for vars that exist in &in_2. only*/
 ;
 
 	merge
@@ -114,6 +114,58 @@ quit;
 	%put WARNING: There are no variables to compare.;
 	%return;
 %end;
+
+
+/*----------------------------------------------------------------------------*/
+/* Compare records from &in_1 with those from &in_2                           */
+/*----------------------------------------------------------------------------*/
+
+/* Create sorted copies of both data sets for comparison
+*/
+%do i=1 %to 2;
+	proc sort
+		data = &&in_&i..(keep = &vars_in_both.)
+		out  = _tmp_&i.
+	;
+		by
+			_ALL_
+		;
+	run;
+
+	data _tmp_&i.;
+		retain __n;
+		set _tmp_&i.;
+		by
+			&vars_in_both.
+		;
+		if first.%scan(&vars_in_both., -1) then __n=1;
+		                                   else __n+1;
+	run;
+
+%end;
+
+/* Compare sorted copies
+*/
+data
+	out_in_both    /*for records that exist in &in_1 and &in_2*/
+	out_only_in_1  /*for records that exist in &in_1 only*/
+	out_only_in_2  /*for records that exist in &in_2 only*/
+;
+
+	merge
+		_tmp_1( in = _in_1 )
+		_tmp_2( in = _in_2 )
+	;
+	by
+		&vars_in_both.
+		__n
+	;
+
+	if _in_1 and _in_2 then output out_in_both; /*record exists in both*/
+	else if _in_1 then output out_only_in_1;    /*record exists in &in_1 only*/
+	              else output out_only_in_2;    /*record exists in &in_2 only*/
+run;
+
 
 %mend;
 
