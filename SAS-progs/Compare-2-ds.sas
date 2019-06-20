@@ -118,7 +118,7 @@ proc sql noprint;
 quit;
 
 
-/* Names of variables that only exist in 1 of both data sets => print to log
+/* Names of variables that only exist in 1 of the 2 data sets => print to log
 */
 %let log_msg = %sysfunc(compbl(
 	NOTE: Variables that will be excluded because they only exist in _:
@@ -132,7 +132,7 @@ quit;
 			put log_msg;
 		end;
 
-		log_msg = catx(" ", cats("(",_N_,")"), NAME);
+		log_msg = catx(" ", "NOTE-", cats("(",_N_,")"), NAME);
 		put log_msg;
 	run;
 %end;
