@@ -44,6 +44,7 @@ run;
 	vars_dffrnt_types /*vars with differing types*/
 	log_msg           /*message for the log*/
 	ds                /*data set*/
+	check_ds          /*data sets to be checked for number of records*/
 	dsid              /*data set id*/
 	recs              /*number of records*/
 ;
@@ -251,3 +252,41 @@ run;
 ,	in_2       = have_2
 ,	out_prefix = result
 );
+
+
+
+/*----------------------------------------------------------------------------*/
+/* Create ds "cnt_example" that shows for the sorted ds copies "_tmp_1" and   */
+/* "_tmp_2" how often (=> cnt) a record appears __n times.                    */
+/*                                                                            */
+/* (This functionality could be added to "%compare_ds()" later.)              */
+/*----------------------------------------------------------------------------*/
+
+%let ds = _tmp_1 /*_tmp_2*/;
+
+data _null_;
+
+	declare hash
+		hsh(ordered:'a');
+		hsh.DefineKey('__n');
+		hsh.DefineData('__n', 'cnt');
+		hsh.DefineDone();
+
+	do until( done );
+		merge
+			&ds.( keep     = __n )
+			&ds.( keep     = __n
+			      rename   = ( __n = __n_nxt )
+			      firstobs = 2
+			    ) end      = done
+		;
+		if __n >= __n_nxt then do;
+			if hsh.find() = 0 then cnt+1;
+			                  else cnt=1;
+			hsh.replace();
+		end;
+	end;
+
+	hsh.output(dataset:'cnt_example');
+	stop;
+run;
