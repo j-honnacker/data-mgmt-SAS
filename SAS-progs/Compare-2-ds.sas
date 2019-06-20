@@ -31,8 +31,9 @@ run;
 
 %macro compare_ds
 (
-	in_1 =
-,	in_2 =
+	in_1       =
+,	in_2       =
+,	out_prefix = out
 );
 
 %local i;
@@ -147,9 +148,9 @@ quit;
 /* Compare sorted copies
 */
 data
-	out_in_both    /*for records that exist in &in_1 and &in_2*/
-	out_only_in_1  /*for records that exist in &in_1 only*/
-	out_only_in_2  /*for records that exist in &in_2 only*/
+	&out_prefix._in_both    /*for records that exist in &in_1 and &in_2*/
+	&out_prefix._only_in_1  /*for records that exist in &in_1 only*/
+	&out_prefix._only_in_2  /*for records that exist in &in_2 only*/
 ;
 
 	merge
@@ -161,9 +162,9 @@ data
 		__n
 	;
 
-	if _in_1 and _in_2 then output out_in_both; /*record exists in both*/
-	else if _in_1 then output out_only_in_1;    /*record exists in &in_1 only*/
-	              else output out_only_in_2;    /*record exists in &in_2 only*/
+	if _in_1 and _in_2 then output &out_prefix._in_both; /*rec exists in both*/
+	else if _in_1 then output &out_prefix._only_in_1; /*rec in &in_1 only*/
+	              else output &out_prefix._only_in_2; /*rec in &in_2 only*/
 run;
 
 
@@ -172,6 +173,7 @@ run;
 
 %compare_ds
 (
-	in_1 = have_1
-,	in_2 = have_2
+	in_1       = have_1
+,	in_2       = have_2
+,	out_prefix = have
 );
