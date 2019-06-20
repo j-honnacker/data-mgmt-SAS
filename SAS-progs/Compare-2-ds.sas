@@ -38,7 +38,15 @@ run;
 ,	out_prefix = out
 );
 
-%local i;
+%local
+	i                 /*iterator*/
+	vars_in_both      /*vars both in &in_1 and &in_2*/
+	vars_dffrnt_types /*vars with differing types*/
+	log_msg           /*message for the log*/
+	ds                /*data set*/
+	dsid              /*data set id*/
+	recs              /*number of records*/
+;
 
 
 /*----------------------------------------------------------------------------*/
