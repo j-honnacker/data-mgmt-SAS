@@ -15,11 +15,20 @@ run;
 
 
 
-%macro loop_through_daily_data;
+%macro loop_through_daily_data
+(
+    start =
+,   end   =
+);
 
-	/* &date_num will contain each date in # of days (since 01-JAN-1960)
+    /* &start_num and &end_num contain dates as # of days (since 01-JAN-1960)
+    */
+	%let start_num = %sysfunc(inputn(&start., yymmdd8.));
+	%let end_num   = %sysfunc(inputn(&end.  , yymmdd8.));
+
+	/* &date_num will contain each date as # of days (since 01-JAN-1960)
 	*/
-	%do date_num = %sysevalf("27-JUN-2019"d) %to %sysevalf("01-JUL-2019"d);
+	%do date_num = &start_num. %to &end_num.;
 
 		/* &date_char will contain each date as <yyyymmddd>
 		*/
@@ -50,4 +59,8 @@ run;
 %mend;
 
 
-%loop_through_daily_data;
+%loop_through_daily_data
+(
+    start = 20190627
+,   end   = 20190701
+);
