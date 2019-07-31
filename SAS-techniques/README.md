@@ -90,7 +90,7 @@ RegEx_Find-and-Replace-Dates.sas
 </td>
 
 <td align="left">
-showcases different view techniques (in-line, DATA step, SQL) on example data
+describes how to identify and overwrite the date portion of a string
 </td>
 
 </tr>
