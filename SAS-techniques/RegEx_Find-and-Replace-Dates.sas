@@ -24,6 +24,12 @@ old_one_19991230
 run;
 
 
+
+
+/******************************************************************************/
+/*	Solution 1                                                                */
+/******************************************************************************/
+
 %let date4 = \d{4};
 %let date6 = \d{6};
 %let date8 = \d{8};
@@ -36,7 +42,7 @@ data _1_simple_solution;
 
     data_clean = prxchange("s/&date8./<ymd8>/", 1, data_clean);
     data_clean = prxchange("s/&date6./<ym6>/" , 1, data_clean);
-    data_clean = prxchange("s/&date4./<ym4>/" , 1, data_clean);
+    data_clean = prxchange("s/&date4./<y4>/" , 1, data_clean);
 
 run;
 
@@ -54,6 +60,48 @@ data _1_simple_solution;
 
     set
         _1_simple_solution
+    ;
+    by
+        data_clean
+    ;
+    if last.data_clean;
+run;
+
+
+
+/******************************************************************************/
+/*	Solution 2                                                                */
+/******************************************************************************/
+
+%let date4 = 20\d\d;
+%let date6 = 20\d\d[0-1]\d;
+%let date8 = 20\d\d[0-1]\d[0-3]\d;
+
+data _2_solution;
+
+	set _0_data_have;
+
+	data_clean = data;
+
+	data_clean = prxchange("s/&date8./<ymd8>/", 1, data_clean);
+	data_clean = prxchange("s/&date6./<ym6>/" , 1, data_clean);
+	data_clean = prxchange("s/&date4./<ym4>/" , 1, data_clean);
+
+run;
+
+proc sort
+    data = _2_solution
+;
+    by
+        data_clean
+        data
+    ;
+run;
+
+data _2_solution;
+
+    set
+        _2_solution
     ;
     by
         data_clean
