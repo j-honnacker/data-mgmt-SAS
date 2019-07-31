@@ -23,3 +23,40 @@ old_one_199912
 old_one_19991230
 run;
 
+
+%let date4 = \d{4};
+%let date6 = \d{6};
+%let date8 = \d{8};
+
+data _1_simple_solution;
+
+    set _0_data_have;
+
+    data_clean = data;
+
+    data_clean = prxchange("s/&date8./<ymd8>/", 1, data_clean);
+    data_clean = prxchange("s/&date6./<ym6>/" , 1, data_clean);
+    data_clean = prxchange("s/&date4./<ym4>/" , 1, data_clean);
+
+run;
+
+
+proc sort
+    data = _1_simple_solution
+;
+    by
+        data_clean
+        data
+    ;
+run;
+
+data _1_simple_solution;
+
+    set
+        _1_simple_solution
+    ;
+    by
+        data_clean
+    ;
+    if last.data_clean;
+run;
