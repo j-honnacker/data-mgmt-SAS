@@ -118,12 +118,15 @@ run;
 
 %let date4a = 20\d\d;
 %let date4b = 19\d\d;
+%let date4  = &date4a.|&date4b.;
 
 %let date6a = 20\d\d[0-1]\d;
 %let date6b = 19\d\d[0-1]\d;
+%let date6  = &date6a.|&date6b.;
 
 %let date8a = 20\d\d[0-1]\d[0-3]\d;
 %let date8b = 19\d\d[0-1]\d[0-3]\d;
+%let date8  = &date8a.|&date8b.;
 
 data _3_solution;
 
@@ -131,9 +134,9 @@ data _3_solution;
 
 	data_clean = data;
 
-	data_clean = prxchange("s/&date8a.|&date8b./<ymd8>/", 1, data_clean);
-	data_clean = prxchange("s/&date6a.|&date6b./<ym6>/" , 1, data_clean);
-	data_clean = prxchange("s/&date4a.|&date4b./<ym4>/" , 1, data_clean);
+	data_clean = prxchange("s/&date8./<ymd8>/", 1, data_clean);
+	data_clean = prxchange("s/&date6./<ym6>/" , 1, data_clean);
+	data_clean = prxchange("s/&date4./<ym4>/" , 1, data_clean);
 
 run;
 
