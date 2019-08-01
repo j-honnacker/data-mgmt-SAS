@@ -119,7 +119,7 @@ quit;
 
 
 /*----------------------------------------------------------------------------*/
-/* Turn "DATA step solution" into an executable macro
+/* Turn "DATA step solution" into an executable macro                         */
 /*----------------------------------------------------------------------------*/
 
 %macro DATA_step_solution
@@ -175,6 +175,55 @@ quit;
 %mend;
 
 
+/*----------------------------------------------------------------------------*/
+/* Turn "PROC SQL solution" into an executable macro                          */
+/*----------------------------------------------------------------------------*/
+
+%macro PROC_SQL_solution
+(
+	dsn_out    =
+,	test_dates =
+);
+	
+	proc sql;
+
+		create table
+			&dsn_out.
+		as
+			select
+				*
+				/*------------------------------*/
+				/* (1) Apply regular expression */
+				/*------------------------------*/
+			,	case
+				  %do i=1 %to %sysfunc(countw(&test_dates.));
+
+					%let date_pattern     = &%scan(&test_dates., &i.).;
+					%let date_replacement =  %scan(&test_dates., &i.);
+
+					when prxmatch("/&date_pattern./", data)
+						then prxchange("s/&date_pattern./<&date_replacement.>/"
+						              , 1, data)
+
+				  %end;
+				end
+					as data_clean
+			from
+				_0_data_have
+
+			/*-----------------*/
+			/* (2) Filter data */
+			/*-----------------*/
+			group by
+				data_clean
+			having
+				data = max(data)
+		;
+
+	quit;
+
+%mend;
+
 
 /******************************************************************************/
 /*	Approach 2                                                                */
@@ -190,6 +239,11 @@ quit;
 ,	dsn_out    = approach_2
 );
 
+%PROC_SQL_solution
+(
+	test_dates = yyyymmdd yyyymm yyyy
+,	dsn_out    = approach_2_sql
+);
 
 
 /******************************************************************************/
@@ -224,3 +278,8 @@ quit;
 ,	dsn_out    = approach_3
 );
 
+%PROC_SQL_solution
+(
+	test_dates = yyyymmdd yyyymm yyyy
+,	dsn_out    = approach_3_sql
+);
