@@ -80,6 +80,45 @@ run;
 
 
 /*----------------------------------------------------------------------------*/
+/*	Perform approach 1 with a PROC SQL solution                               */
+/*----------------------------------------------------------------------------*/
+
+proc sql;
+
+    create table
+        approach_1_sql
+    as
+        select
+            *
+            /*------------------------------*/
+            /* (1) Apply regular expression */
+            /*------------------------------*/
+        ,	case
+                when prxmatch("/&yyyymmdd./", data)
+                    then prxchange("s/&yyyymmdd./<yyyymmdd>/" , 1, data)
+                when prxmatch("/&yyyymm./", data)
+                    then prxchange("s/&yyyymm./<yyyymm>/" , 1, data)
+                when prxmatch("/&yyyy./", data)
+                    then prxchange("s/&yyyy./<yyyy>/" , 1, data)
+            end
+                as data_clean
+        from
+            have
+
+        /*-----------------*/
+        /* (2) Filter data */
+        /*-----------------*/
+        group by
+            data_clean
+        having
+            data = max(data)
+    ;
+
+quit;
+
+
+
+/*----------------------------------------------------------------------------*/
 /* Turn "DATA step solution" into an executable macro
 /*----------------------------------------------------------------------------*/
 
