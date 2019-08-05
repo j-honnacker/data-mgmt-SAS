@@ -80,6 +80,22 @@ applies different approaches to create macro variables
 </tr>
 
 
+<!-- ReadCSV_Find-and-Replace-Dates.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/ReadCSV_Line-Breaks-within-Quotes.sas">
+ReadCSV_Line-Breaks-within-Quotes.sas
+</a></code>
+</td>
+
+<td align="left">
+reads a CSV without starting a new record when encountering line breaks within quotes.
+</td>
+
+</tr>
+
+
 <!-- RegEx_Find-and-Replace-Dates.sas -->
 <tr>
 
