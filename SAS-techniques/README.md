@@ -85,12 +85,12 @@ applies different approaches to create macro variables
 
 <td align="left">
 <code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/ReadCSV_Line-Breaks-within-Quotes.sas">
-ReadCSV_Line-Breaks-within-Quotes.sas
+ReadCSV_Line&#8209;Breaks&#8209;within&#8209;Quotes.sas
 </a></code>
 </td>
 
 <td align="left">
-reads a CSV without starting a new record when encountering line breaks within quotes.
+reads a CSV without starting a new record when encountering line breaks within quotes
 </td>
 
 </tr>
