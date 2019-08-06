@@ -58,3 +58,23 @@ run;
 	=> default libref is 'work' (1)
 	=> possible to delete data sets from different librefs in one statement (2)
 */
+
+
+/*----------------------------------------------------------------------------*/
+/*	PROC SQL
+/*----------------------------------------------------------------------------*/
+
+%create_test_data;
+
+proc sql;
+	drop table
+		test_201812        /*(1)*/
+	,	work.test_201901
+	,	my_lib.test_201902 /*(2)*/
+	;
+quit;
+/*
+	=> default libref is 'work' (1)
+	=> possible to delete data sets from different librefs in one statement (2)
+	=> multiple data set names must be separated by comma
+*/
