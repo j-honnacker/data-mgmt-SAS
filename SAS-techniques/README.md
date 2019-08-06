@@ -28,7 +28,8 @@ Hash_Basics.sas
 </td>
 
 <td align="left">
-shows the basics of initiating, populating and iterating through hash tables</td>
+shows the basics of initiating, populating and iterating through hash tables
+</td>
 </tr>
 
 
@@ -140,6 +141,22 @@ Views_Beyond&#8209;Basics.sas
 <td align="left">
 covers interesting features related to views that I've stumbled across in practice
 (e.g., defining both <i>data set</i> and <i>view</i> in one DATA step, using macro variables in view definitions)
+</td>
+
+</tr>
+
+
+<!-- sas7bdat_Delete-Data-Sets.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/sas7bdat_Delete-Data-Sets.sas">
+sas7bdat_Delete&#8209;Data&#8209;Sets.sas
+</code></a>
+</td>
+
+<td align="left">
+demonstrates different ways (PROC DATASETS/DELETE, PROC SQL) to delete SAS data sets
 </td>
 
 </tr>
