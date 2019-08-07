@@ -28,16 +28,19 @@ libname my_lib "%sysfunc(pathname(work))";
 
 proc datasets
 	nolist         /*suppress output*/
+	nowarn         /*suppress warnings (3)*/
 /*	library = work /*redundant because 'work' is the default (1)*/
 ;
 	delete
 		test_201812
 		test_2019:  /*(2)*/
+		something   /*(3)*/
 	;
 quit;
 /*
 	=> default libref is 'work' (1)
 	=> colon wildcard can be used (2)
+	=> log entries in case of non-existing data sets can be suppressed (3)
 */
 
 
