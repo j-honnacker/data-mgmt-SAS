@@ -34,7 +34,7 @@ proc datasets
 		test_201812
 		test_2019:  /*(2)*/
 	;
-run;
+quit;
 /*
 	=> default libref is 'work' (1)
 	=> colon wildcard can be used (2)
