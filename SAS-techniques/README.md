@@ -28,7 +28,7 @@ DI-Studio_Formats.sas
 </td>
 
 <td align="left">
-shows a way to run *Data Integration Studio* jobs that require additional formats
+shows a way to run <i>Data Integration Studio</i> jobs that require additional formats
 </td>
 </tr>
 
