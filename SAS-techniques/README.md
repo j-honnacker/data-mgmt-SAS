@@ -18,6 +18,21 @@ Whenever I needed a refresher on how hashes work, [Hash_Basics.sas](https://gith
 
 <tbody>
 
+<!-- DI-Studio_Formats.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/DI-Studio_Formats.sas">
+DI-Studio_Formats.sas
+</a></code>
+</td>
+
+<td align="left">
+shows a way to run *Data Integration Studio* jobs that require additional formats
+</td>
+</tr>
+
+
 <!-- Hash_Basics.sas --> 
 <tr>
 
@@ -28,7 +43,7 @@ Hash_Basics.sas
 </td>
 
 <td align="left">
-shows the basics of initiating, populating and iterating through hash tables
+explains the basics of initiating, populating and iterating through hash tables
 </td>
 </tr>
 
