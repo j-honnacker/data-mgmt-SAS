@@ -28,7 +28,7 @@ DI-Studio_Formats.sas
 </td>
 
 <td align="left">
-shows a way to run <i>Data Integration Studio</i> jobs that require additional formats
+shows a way to run <i>Data Integration Studio</i> jobs that require additional formats <a href="#DI-Studio_Formats">Details</a>
 </td>
 </tr>
 
@@ -179,3 +179,9 @@ demonstrates different ways (PROC DATASETS/DELETE, PROC SQL) to delete SAS data 
 </tbody>
 
 </table>
+
+
+<a id='DI-Studio_Formats'></a>
+### <code>DI-Studio_Formats.sas</code>
+
+<img src="https://github.com/j-honnacker/data-mgmt-SAS/blob/README/DI-Studio_Precode.PNG" alt="Precode tab of a DI Studio job" width="600"/>
