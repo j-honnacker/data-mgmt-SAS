@@ -112,6 +112,22 @@ reads a CSV without starting a new record when encountering line breaks within q
 </tr>
 
 
+<!-- ReadCSV_NAs.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/ReadCSV_NAs.sas">
+ ReadCSV_NAs.sas
+</a></code>
+</td>
+
+<td align="left">
+reads a CSV and recognizes "NA" values as missing values for both character and numeric variables
+</td>
+
+</tr>
+
+
 <!-- RegEx_Find-and-Replace-Dates.sas -->
 <tr>
 
