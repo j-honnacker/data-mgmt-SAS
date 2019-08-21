@@ -1,19 +1,30 @@
-/* Original input file created in R:
 
+/*----------------------------------------------------------------------------*/
+/* Create input CSV file
+/*----------------------------------------------------------------------------*/
+/* Original CSV file created in R:
+
+# Create DataFrame 'x' with a character variable and a numeric variable - both
+#  containing missing values
 x <- data.frame('chr' = c("Cause", NA, "compares...", NA, "compares", "to you"),
                 'num' = c(5, 8, 8, 4, 0, NA))
 
-write.csv(x, 'written_by_R.csv')
+# Export DataFrame 'x' to CSV file 'input.csv'
+write.csv(x, 'input.csv', row.names=FALSE)
 
 */
 
 
-/* Location of (original) input file written in and by R:
+/*----------------------------------------------------------------------------*/
+/* (1) Create '_temp', a modified copy of the input CSV file
+/*----------------------------------------------------------------------------*/
+
+/* Location of the input CSV file (written in and by R):
 */
-%let original_file = /sas/homes/data/from_R.csv;
+%let input_file = /sas/homes/data/input.csv;
 
 
-/* Create temporary file '_temp'
+/* Create filename '_temp' for the temporary copy of the original input file
 */
 filename _temp temp;
 
@@ -23,7 +34,7 @@ filename _temp temp;
 */
 data _null_;
 	infile
-  		"&original_file."
+  		"&input_file."
   		lrecl = 32767
   		obs = 1
   	;
@@ -32,13 +43,15 @@ data _null_;
 run;
 
 
+/* Read from input CSV file, replace NAs by blanks, and write to '_temp'
+*/
 data _null_;
 
 /*--- @ compile time ---------------------------------------------------------*/
 
 	/* specify INPUT file for INPUT statement */
 	infile
-  		"&original_file."
+  		"&input_file."
   		lrecl = 32767
   		end   = eof
   		dsd
@@ -51,25 +64,26 @@ data _null_;
 		dsd
 	;
 
-	/* specify maximum length for a variable
-	*/
+	/* specify maximum length for a variable */
 	length var $1000 ;
 
 /*---- @ execution time ------------------------------------------------------*/
 
 	do i=1 to &number_of_vars.;
-		input var @;
-		if var='NA' then var='';
-		put var @;
+		input var @;             /*read from input file*/
+		if var='NA' then var=''; /*replace NAs by blanks*/
+		put var @;               /*write to temporary file*/
 	end;
 	put;
 
 run;
 
 
-/* Finally, read from the pre-processed '_temp' (instead of the original file)
-*/
-data x_DataFrame;
+/*----------------------------------------------------------------------------*/
+/* (2) Import from the pre-processed '_temp' (instead of the original CSV file)
+/*----------------------------------------------------------------------------*/
+
+data output;
 
 	infile
 		_temp
@@ -82,7 +96,6 @@ data x_DataFrame;
 
 
 	input
-		index   :12.
 		chr    :$12.
 		num      :3.
 	;
