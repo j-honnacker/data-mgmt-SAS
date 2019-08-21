@@ -122,7 +122,7 @@ reads a CSV without starting a new record when encountering line breaks within q
 </td>
 
 <td align="left">
-reads a CSV and recognizes "NA" values as missing values for both character and numeric variables
+reads a CSV and recognizes "NA" values as missing values for both character and numeric variables <a href="#ReadCSV-NAs">Details</a>
 </td>
 
 </tr>
@@ -198,6 +198,14 @@ demonstrates different ways (PROC DATASETS/DELETE, PROC SQL) to delete SAS data 
 
 
 <a id='DI-Studio_Formats'></a>
-### <code>DI-Studio_Formats.sas</code>
+### <code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/DI-Studio_Formats.sas">DI-Studio_Formats.sas</a></code>
 
 <img src="https://github.com/j-honnacker/data-mgmt-SAS/blob/README/DI-Studio_Precode.PNG" alt="Precode tab of a DI Studio job" width="600"/>
+
+
+<a id='ReadCSV-NAs'></a>
+### <code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/ReadCSV_NAs.sas">ReadCSV_NAs.sas</a></code>
+
+This example shows how to import a CSV file into SAS that contains missing values which are represented by "NA". This placeholder mainly occured in CSV files I received from departments working with R.
+
+Since SAS requires missing values to be represented by blanks (or single periods), the following approach reads the original CSV file and creates a temporary copy of it in which NAs are replaced by blanks. The final import step then uses this pre-processed copy instead of the original file.
