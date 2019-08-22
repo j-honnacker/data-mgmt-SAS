@@ -128,6 +128,22 @@ reads a CSV and recognizes "NA" values as missing values for both character and 
 </tr>
 
 
+<!-- ReadCSV_Simulate-External-File.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/ReadCSV_Simulate-External-File.sas">
+ReadCSV_Simulate&#8209;External&#8209;File.sas
+</a></code>
+</td>
+
+<td align="left">
+demonstrates how to read instream data which can be used to simulate an external file
+</td>
+
+</tr>
+
+
 <!-- RegEx_Find-and-Replace-Dates.sas -->
 <tr>
 
