@@ -33,6 +33,21 @@ shows a way to run <i>Data Integration Studio</i> jobs that require additional f
 </tr>
 
 
+<!-- Formats_Numeric.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/Formats_Numeric.sas">
+Formats_Numeric.sas
+</a></code>
+</td>
+
+<td align="left">
+applies formats to numeric variables
+</td>
+</tr>
+
+
 <!-- Hash_Basics.sas --> 
 <tr>
 
