@@ -48,6 +48,21 @@ applies formats to numeric variables
 </tr>
 
 
+<!-- Formats_Transformations.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/Formats_Transformations.sas">
+Formats_Transformations.sas
+</a></code>
+</td>
+
+<td align="left">
+transforms the value of one variable to an equivalent value of another variable using Formats/Informats
+</td>
+</tr>
+
+
 <!-- Hash_Basics.sas --> 
 <tr>
 
