@@ -110,7 +110,7 @@ demonstrates how to iterate through monthly/daily data sets using timestamps
 </tr>
 
 
-<!-- MacroL_Loops.sa --> 
+<!-- MacroL_Loops.sas --> 
 <tr>
 
 <td align="left">
@@ -121,6 +121,22 @@ MacroL_Ways&#8209;to&#8209;create&#8209;MacroVars.sas
 
 <td align="left">
 applies different approaches to create macro variables
+</td>
+
+</tr>
+
+
+<!-- Misc_Select-When.sas --> 
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/Misc_Select-When.sas">
+Misc_Select&#8209;When.sas
+</a></code>
+</td>
+
+<td align="left">
+explains the Select-When syntax within a DATA step
 </td>
 
 </tr>
