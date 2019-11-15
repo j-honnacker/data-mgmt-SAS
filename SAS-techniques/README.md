@@ -254,6 +254,22 @@ demonstrates different ways (PROC DATASETS/DELETE, PROC SQL) to delete SAS data 
 
 </tr>
 
+
+<!-- sas7bdat_Info-on-Data-Set.sas -->
+<tr>
+
+<td align="left">
+<code><a target="_blank" rel="noopener noreferrer" href="https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/sas7bdat_Info-on-Data-Set.sas">
+sas7bdat_Info&#8209;on&#8209;Data&#8209;Set.sas
+</code></a>
+</td>
+
+<td align="left">
+shows different techniques (e.g., PROC CONTENTS, dictionary tables) to get information on a SAS data set (e.g., number of observations/variables)
+</td>
+
+</tr>
+
 </tbody>
 
 </table>
