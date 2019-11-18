@@ -1,8 +1,17 @@
 ## SAS Techniques
 
+<!---
 ### Purpose
 
 Whenever I needed a refresher on how hashes work, [Hash_Basics.sas](https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/Hash_Basics.sas "Hash_Basics.sas") can help me out. If I thought about using a more complex "hash of hashes" approach (because it's fancy) but wasn't sure if it was a good solution for the issue at hand (often it's not), [Hash_Hash-of-Hashes.sas](https://github.com/j-honnacker/data-mgmt-SAS/blob/master/SAS-techniques/Hash_Hash-of-Hashes.sas "Hash_Hash-of-Hashes.sas") demonstrates *the technique* **and** contains *an issue* which can be adequately solved by it.
+--->
+
+### Description
+
+The code contained in this collection of SAS programs showcases various techniques that have been relevant to my work.
+Some programs merely explain the basics of a technique, while others demonstrate how a problem can be solved by it.
+
+All programs can be run directly (in SAS 9.2 or higher) unless otherwise stated.
 
 
 ### Overview
